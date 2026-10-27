@@ -2,6 +2,7 @@
 Version: 2.0.0
 Date: ???
   Changes:
+    - Updated for Factorio 2.1
     - Petrochem Cleanup #207
       - Changed Blue Algae Liquefaction recipe to produce Crude Oil instead of Multi-phase Oil
       - Change Cellulose Paste recipe to use Chlorine Gas instead of Chloromethane Gas

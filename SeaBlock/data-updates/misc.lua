@@ -35,12 +35,36 @@ end
 
 -- Remove resources so mining recipes don't show in FNEI
 -- Have to leave at least one resource or game will not load
+-- Sea-pump-resource is a virtual resource.
+-- When the offshore pump is placed, it is supposed to be replaced by the resource and a mining-drill.
+-- Removing the resource causes placement of heavy pumps to crash new maps.
+-- Without it, keep crude oil; nothing autoplaces it.
+local keep_resource = data.raw["resource"]["sea-pump-resource"] and "sea-pump-resource" or "crude-oil"
 for k, v in pairs(data.raw["resource"]) do
-  -- Sea-pump-resource is a virtual resource.
-  -- When the offshore pump is placed, it is supposed to be replaced by the resource and a mining-drill.
-  -- Removing the resource causes placement of heavy pumps to crash new maps.
-  if k ~= "sea-pump-resource" then
+  if k ~= keep_resource then
     data.raw["resource"][k] = nil
+  end
+end
+
+-- Technologies triggered by mining a removed resource would fail to load
+for _, tech in pairs(data.raw.technology) do
+  local trigger = tech.research_trigger
+  if trigger and trigger.type == "mine-entity" then
+    local entities = {}
+    for _, entity in pairs(trigger.entities or { trigger.entity }) do
+      if not data.raw["resource"][entity] then
+        log("Warning: removing mine-entity trigger on technology " .. tech.name .. ": " .. entity)
+      else
+        table.insert(entities, entity)
+      end
+    end
+    if next(entities) then
+      trigger.entity = nil
+      trigger.entities = entities
+    else
+      tech.research_trigger = nil
+      tech.unit = { count = 10, ingredients = { { "automation-science-pack", 1 } }, time = 10 }
+    end
   end
 end
 
@@ -64,7 +88,7 @@ if mods["angelsaddons-storage"] then
 end
 
 -- Logistic System prerequisite of Pink Science
-if not data.raw.tool["bob-advanced-logistic-science-pack"] then
+if not data.raw.item["bob-advanced-logistic-science-pack"] then
   bobmods.lib.tech.add_prerequisite("logistic-system", "utility-science-pack")
 end
 
@@ -91,7 +115,7 @@ seablock.lib.substresult("angels-ore9-crystal-processing", "angels-platinum-ore"
 
 -- Unhide rocket part to make it easier to view recipes
 if data.raw.recipe["rocket-part"] then
-  angelsmods.functions.remove_flag("rocket-part", "hidden")
+  seablock.lib.unhide("item", "rocket-part")
   local r = data.raw.recipe["rocket-part"]
 
   r.hidden = false

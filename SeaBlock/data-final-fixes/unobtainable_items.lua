@@ -20,7 +20,7 @@ local function updateline(line)
   end
 end
 for _, recipe in pairs(data.raw.recipe) do
-  for _, v in pairs(recipe.ingredients) do
+  for _, v in pairs(recipe.ingredients or {}) do
     updateline(v)
   end
   if recipe.result and itemrename[recipe.result] then
@@ -131,35 +131,27 @@ for k, v in pairs(data.raw.technology) do
   end
 end
 
-for k, v in pairs(recipes) do
-  for _, recipe in pairs(v) do
-    local items = {}
-    if recipe.ingredients then
-      for _, ingredient in pairs(recipe.ingredients) do
-        local item = ingredient.name
-        if unobtainable[item] then
-          items[item] = true
-        end
+for _, recipe in pairs(recipes) do
+  local items = {}
+  for _, ingredient in pairs(recipe.ingredients or {}) do
+    local item = ingredient.name
+    if unobtainable[item] then
+      items[item] = true
+    end
+  end
+  local results = {}
+  for _, w in pairs(recipe.results or {}) do
+    table.insert(results, w.name)
+  end
+  if next(items) ~= nil then
+    for _, r in pairs(results) do
+      if unobtainable[r] ~= nil then
+        table.insert(unobtainable[r], table.deepcopy(items))
       end
     end
-    local results = {}
-    if recipe.result then
-      results = { recipe.result }
-    elseif recipe.results then
-      for _, w in pairs(recipe.results) do
-        table.insert(results, w.name)
-      end
-    end
-    if next(items) ~= nil then
-      for _, r in pairs(results) do
-        if unobtainable[r] ~= nil then
-          table.insert(unobtainable[r], table.deepcopy(items))
-        end
-      end
-    else
-      for _, r in pairs(results) do
-        unobtainable[r] = nil
-      end
+  else
+    for _, r in pairs(results) do
+      unobtainable[r] = nil
     end
   end
 end
@@ -184,7 +176,11 @@ end
 
 -- Add hidden flag to disabled items so they don't show up in circuit menu/item filter/FNEI etc.
 for k, _ in pairs(unobtainable) do
-  seablock.lib.hide_item(k)
+  if data.raw.item[k] then
+    seablock.lib.hide("item", k)
+  elseif data.raw.fluid[k] then
+    seablock.lib.hide("fluid", k)
+  end
 end
 
 -- Remove any recipe that uses an unobtainable ingredient
@@ -218,10 +214,4 @@ for k, v in pairs(data.raw.technology) do
     end
     v.effects = neweffects
   end
-end
-
--- Clear the list of science packs that alien lab can take
--- This prevents YAFC warning
-if data.raw.lab["bob-lab-alien"] then
-  data.raw.lab["bob-lab-alien"].inputs = {}
 end

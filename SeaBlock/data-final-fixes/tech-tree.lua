@@ -19,7 +19,7 @@ bobmods.lib.tech.add_prerequisite("circuit-network", "angels-bio-paper-1")
 bobmods.lib.tech.remove_prerequisite("angels-rubbers", "circuit-network")
 
 -- Unhide solid fuel from hydrogen
-seablock.lib.unhide_recipe("bob-solid-fuel-from-hydrogen")
+seablock.lib.unhide("recipe", "bob-solid-fuel-from-hydrogen")
 seablock.lib.add_recipe_unlock("flammables", "bob-solid-fuel-from-hydrogen", 4)
 
 bobmods.lib.tech.replace_prerequisite(

@@ -89,7 +89,7 @@ bobmods.lib.tech.remove_prerequisite("angels-titanium-casting-3", "angels-chrome
 -- Hide steam inserter
 seablock.lib.hide("inserter", "bob-steam-inserter")
 bobmods.lib.recipe.hide("bob-steam-inserter")
-seablock.lib.hide_item("bob-steam-inserter")
+seablock.lib.hide("item", "bob-steam-inserter")
 if data.raw.inserter["bob-steam-inserter"] then
   data.raw.inserter["bob-steam-inserter"].next_upgrade = nil
   bobmods.lib.recipe.replace_ingredient_in_all("bob-steam-inserter", "burner-inserter")
@@ -119,11 +119,11 @@ seablock.lib.hide("item", "bob-liquid-fuel-barrel")
 -- Swap out Nickel and Zinc plates
 seablock.lib.substingredient("bob-roboport-antenna-3", "bob-nickel-plate", "bob-titanium-plate", nil)
 bobmods.lib.recipe.remove_ingredient("bob-roboport-antenna-4", "bob-nickel-plate")
-seablock.lib.substingredient("bob-silver-zinc-battery", "bob-zinc-plate", "angels-solid-zinc-oxide", nil)
+seablock.lib.substingredient("bob-battery-3", "bob-zinc-plate", "angels-solid-zinc-oxide", nil)
 seablock.lib.substingredient("angels-thorium-fuel-cell", "bob-zinc-plate", "steel-plate", nil)
 seablock.lib.substingredient("angels-deuterium-fuel-cell", "bob-zinc-plate", "steel-plate", nil)
 
-seablock.lib.unhide_recipe("angels-solid-zinc-oxide")
+seablock.lib.unhide("recipe", "angels-solid-zinc-oxide")
 bobmods.lib.tech.add_recipe_unlock("angels-zinc-smelting-2", "angels-solid-zinc-oxide")
 data.raw.recipe["angels-solid-zinc-oxide"].localised_name = nil
 
@@ -139,13 +139,13 @@ end
 seablock.lib.substingredient("angels-thorium-fuel-cell", "angels-plate-zinc", "bob-lead-plate", nil)
 seablock.lib.substingredient("angels-deuterium-fuel-cell", "angels-plate-zinc", "bob-lead-plate", nil)
 
-seablock.lib.hide_item("bob-nickel-plate")
-seablock.lib.hide_item("bob-zinc-plate")
+seablock.lib.hide("item", "bob-nickel-plate")
+seablock.lib.hide("item", "bob-zinc-plate")
 bobmods.lib.recipe.hide("bob-zinc-plate")
 bobmods.lib.tech.remove_recipe_unlock("bob-zinc-processing", "bob-zinc-plate")
 
 if mods["cargo-ships"] then
-  seablock.lib.hide_item("oil_rig")
+  seablock.lib.hide("item", "oil_rig")
 end
 
 -- Hide the farm environment kits

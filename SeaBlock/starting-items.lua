@@ -7,14 +7,12 @@ function seablock.populate_starting_items(items)
     ["small-lamp"] = 12,
     ["iron-plate"] = 1200,
     ["bob-basic-circuit-board"] = 200,
-    ["bob-stone-pipe"] = 100,
-    ["bob-stone-pipe-to-ground"] = 50,
     ["stone-brick"] = 500,
-    ["pipe"] = 21,
+    ["pipe"] = 121,
     ["bob-copper-pipe"] = 5,
     ["iron-gear-wheel"] = 10,
     ["iron-stick"] = 88,
-    ["pipe-to-ground"] = 2,
+    ["pipe-to-ground"] = 52,
   }
 
   -- Starting power production

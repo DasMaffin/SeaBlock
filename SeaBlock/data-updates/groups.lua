@@ -12,7 +12,6 @@ if not mods["angelsindustries"] then
     end
   end
 
-  move_item("battery", "bob-intermediates", "f-cba[battery]")
   move_item("iron-gear-wheel", "bob-gears", "aa[iron-gear-wheel]")
 end
 

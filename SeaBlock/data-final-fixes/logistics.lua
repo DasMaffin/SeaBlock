@@ -23,9 +23,9 @@ set_speed("transport-belt", "express-transport-belt", 45)
 set_speed("underground-belt", "express-underground-belt", 45)
 set_speed("splitter", "express-splitter", 45)
 
-set_speed("transport-belt", "bob-turbo-transport-belt", 60)
-set_speed("underground-belt", "bob-turbo-underground-belt", 60)
-set_speed("splitter", "bob-turbo-splitter", 60)
+set_speed("transport-belt", "turbo-transport-belt", 60)
+set_speed("underground-belt", "turbo-underground-belt", 60)
+set_speed("splitter", "turbo-splitter", 60)
 
 set_speed("transport-belt", "bob-ultimate-transport-belt", 75)
 set_speed("underground-belt", "bob-ultimate-underground-belt", 75)
@@ -50,7 +50,7 @@ end
 
 -- Undo boblogistcs changes to logistic system research
 bobmods.lib.tech.add_new_science_pack("logistic-system", "production-science-pack", 1)
-if data.raw.tool["bob-advanced-logistic-science-pack"] then
+if data.raw.item["bob-advanced-logistic-science-pack"] then
   bobmods.lib.tech.add_new_science_pack("logistic-system", "bob-advanced-logistic-science-pack", 1)
 else
   bobmods.lib.tech.add_new_science_pack("logistic-system", "utility-science-pack", 1)
@@ -70,7 +70,7 @@ for _, v in pairs(logisticstechs) do
     bobmods.lib.tech.add_new_science_pack(v, "production-science-pack", 1)
     bobmods.lib.tech.add_new_science_pack(v, "utility-science-pack", 1)
 
-    if data.raw.tool["bob-advanced-logistic-science-pack"] then
+    if data.raw.item["bob-advanced-logistic-science-pack"] then
       bobmods.lib.tech.add_new_science_pack(v, "bob-advanced-logistic-science-pack", 1)
     end
   end

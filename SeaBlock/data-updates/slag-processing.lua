@@ -8,7 +8,7 @@ for i = 1, 6 do
   recipe.localised_name = { "recipe-name.angels-slag-processing", { "item-name.angels-ore" .. i } }
   recipe.order = "a-a [angels-ore-" .. i .. "]"
 
-  recipe.category = "angels-crystallizing"
+  recipe.categories = { "angels-crystallizing" }
   recipe.energy_required = 4
   recipe.ingredients = { { type = "fluid", name = "angels-mineral-sludge", amount = 25 } }
   recipe.results = { { type = "item", name = "angels-ore" .. i, amount = 1 } }
@@ -59,6 +59,7 @@ bobmods.lib.tech.add_prerequisite("angels-advanced-ore-refining-1", "angels-ore-
 seablock.lib.moveeffect("angels-ore-crusher", "angels-ore-crushing", "automation")
 bobmods.lib.tech.remove_prerequisite("angels-slag-processing-1", "angels-ore-crushing")
 bobmods.lib.tech.remove_prerequisite("angels-slag-processing-1", "logistic-science-pack")
+bobmods.lib.tech.remove_prerequisite("angels-slag-processing-1", "sulfur-processing")
 bobmods.lib.tech.remove_prerequisite("angels-ore-crushing", "angels-basic-chemistry")
 bobmods.lib.tech.add_prerequisite("angels-ore-crushing", "angels-slag-processing-1")
 

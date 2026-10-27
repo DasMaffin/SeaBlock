@@ -37,8 +37,6 @@ if mods["LandfillPainting"] then
       default_landfill = stripped
       recipe.results = { { type = "item", name = default_landfill, amount = 1 } }
       recipe.localised_name = { "item-name." .. default_landfill }
-    else
-      recipe.always_show_products = true
     end
   end
 
