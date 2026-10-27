@@ -1,3 +1,27 @@
+-- ScienceCostTweakerM moves its sct-*-science-pack techs onto the base names in data-final-fixes,
+-- so point prerequisites added in data-updates at the new names
+if mods["ScienceCostTweakerM"] then
+  for tech_name, tech in pairs(data.raw.technology) do
+    if tech.prerequisites then
+      local prerequisites = {}
+      local seen = {}
+      for _, prerequisite in pairs(tech.prerequisites) do
+        if not data.raw.technology[prerequisite] and prerequisite:sub(1, 4) == "sct-" then
+          local renamed = prerequisite:sub(5)
+          if data.raw.technology[renamed] then
+            prerequisite = renamed
+          end
+        end
+        if prerequisite ~= tech_name and not seen[prerequisite] then
+          seen[prerequisite] = true
+          table.insert(prerequisites, prerequisite)
+        end
+      end
+      tech.prerequisites = prerequisites
+    end
+  end
+end
+
 -- Remove empty bob's techs
 bobmods.lib.tech.remove_prerequisite("bob-cobalt-processing", "bob-chemical-processing-1")
 bobmods.lib.tech.remove_prerequisite("bob-grinding", "bob-chemical-processing-1")

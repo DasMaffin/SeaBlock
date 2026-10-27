@@ -41,6 +41,7 @@ bobmods.lib.tech.replace_prerequisite(
   "angels-bio-processing-green"
 )
 bobmods.lib.tech.remove_prerequisite("angels-bio-processing-blue", "chemical-science-pack")
+bobmods.lib.tech.remove_prerequisite("angels-bio-processing-blue", "angels-stone-smelting-2")
 bobmods.lib.tech.remove_science_pack("angels-bio-processing-blue", "chemical-science-pack")
 bobmods.lib.tech.remove_recipe_unlock("angels-bio-processing-blue", "angels-algae-farm-4")
 bobmods.lib.recipe.set_category("angels-algae-blue", "angels-bio-processing-2")

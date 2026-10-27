@@ -86,7 +86,10 @@ end
 
 -- unlock lab and optional components with Basic Circuit Board
 if data.raw.technology["sct-lab-t1"] then
-  bobmods.lib.tech.add_prerequisite("sct-lab-t1", "sb-startup3")
+  -- Electronics and Steam Power come after Automation science pack
+  data.raw.technology["sct-lab-t1"].prerequisites = { "sb-startup3" }
+  data.raw.technology["sct-lab-t1"].research_trigger = { type = "craft-item", item = "bob-basic-circuit-board" }
+  data.raw.technology["sct-lab-t1"].unit = nil
 else
   bobmods.lib.tech.add_recipe_unlock("sb-startup3", "lab")
   bobmods.lib.recipe.enabled("lab", false)
@@ -97,11 +100,6 @@ if data.raw.technology["sct-automation-science-pack"] then
 
   data.raw.technology["sct-automation-science-pack"].research_trigger = { type = "craft-item", item = "lab" }
   data.raw.technology["sct-automation-science-pack"].unit = nil
-  data.raw.technology["sct-lab-t1"].unit = {
-    count = 1,
-    ingredients = {},
-    time = 1,
-  }
   seablock.lib.hide_technology("sb-startup4")
 end
 
