@@ -100,6 +100,8 @@ if data.raw.technology["sct-automation-science-pack"] then
 
   data.raw.technology["sct-automation-science-pack"].research_trigger = { type = "craft-item", item = "lab" }
   data.raw.technology["sct-automation-science-pack"].unit = nil
+  -- SCT expects to inherit the recipe from the base tech, but sb-startup4 took it
+  seablock.lib.moveeffect("automation-science-pack", "sb-startup4", "sct-automation-science-pack")
   seablock.lib.hide_technology("sb-startup4")
 end
 
