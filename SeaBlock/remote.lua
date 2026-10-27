@@ -205,7 +205,7 @@ local function milestones_presets()
 
   return {
     ["Sea Block"] = {
-      required_mods = { "SeaBlock", "bobplates", "bobelectronics", "angelsbioprocessing", "angelspetrochem" },
+      required_mods = { "MSeaBlock", "bobplates", "bobelectronics", "angelsbioprocessing", "angelspetrochem" },
       milestones = milestones,
     },
   }
