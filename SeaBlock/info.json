@@ -1,12 +1,12 @@
 {
-  "name": "SeaBlock",
+  "name": "MSeaBlock",
   "version": "2.0.0",
   "factorio_version": "2.1",
-  "title": "Sea Block",
-  "author": "Trainwreck",
+  "title": "MSeaBlock",
+  "author": "Maffin, based on Sea Block by Trainwreck",
   "contact": "",
-  "homepage": "https://forums.factorio.com/viewtopic.php?t=93136",
-  "description": "No ore patches, expand from a small island. Also install the 'Sea Block Pack - Official' mod for a complete modpack",
+  "homepage": "https://github.com/DasMaffin/SeaBlock",
+  "description": "Unofficial Factorio 2.1 port of Sea Block. No ore patches, expand from a small island.",
   "dependencies": [
     "base",
     "angelsbioprocessing >= 2.1.2",
@@ -40,6 +40,7 @@
 
     "(?) Companion_Drones",
     
+    "! SeaBlock",
     "! alien-biomes",
     "! quality",
     "! space-age"
