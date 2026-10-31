@@ -31,11 +31,6 @@ data.raw.technology["landfill"].unit = {
 }
 bobmods.lib.tech.ignore_tech_cost_multiplier("landfill", true)
 
--- For blueprint pasting on water
-local tile = data.raw.item[default_landfill].place_as_tile.result
-data.raw.tile["water"].default_cover_tile = tile
-data.raw.tile["deepwater"].default_cover_tile = tile
-
 if mods["LandfillPainting"] then
   -- Set prefered type for basic landfill crafting
   if settings.startup["sb-default-landfill"] then
@@ -74,6 +69,11 @@ if mods["LandfillPainting"] then
     tile.is_foundation = true
   end
 end
+
+-- For blueprint pasting on water, using the landfill type the basic recipe makes
+local tile = data.raw.item[default_landfill].place_as_tile.result
+data.raw.tile["water"].default_cover_tile = tile
+data.raw.tile["deepwater"].default_cover_tile = tile
 
 -- Paste over sand-4 and -5
 local tile_cond = data.raw.item["landfill"].place_as_tile.tile_condition
