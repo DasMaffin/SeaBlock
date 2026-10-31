@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.0.2
+Date: 31.10.2026
+  Changes:
+    - Removed the optional dependency on Landfill Painting, which has no Factorio 2.1 version. Use MLandfillPainting instead
+---------------------------------------------------------------------------------------------------
 Version: 2.0.1
 Date: 31.10.2026
   Features:
