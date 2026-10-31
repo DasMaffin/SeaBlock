@@ -1,4 +1,23 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.0.1
+Date: 31.10.2026
+  Features:
+    - Support for MLandfillPainting, the Factorio 2.1 port of Landfill Painting
+  Changes:
+    - Landfill is a Red Science tech after Water washing 1 again and unlocks Solid mud landfill
+    - Blueprints pasted over water use the Default landfill type
+    - Bob's recipes that need Nickel plates use Nickel ingots instead
+    - Alien artifacts can be made from Angel's small alien artifacts again
+  Bugfixes:
+    - Fixed Green Science being unreachable because Sulfur processing needed it
+    - Fixed techs that could never be researched because they needed disabled Bob's techs
+    - Fixed loading and the Automation science pack recipe with ScienceCostTweakerM
+    - Fixed placing a Heavy offshore pump crashing the game
+    - Fixed catalyst recipes returning a different catalyst than they use
+    - Fixed sniper rifle, firearm magazine and endgame equipment needing items that can't be made
+    - Fixed Bob's hydrazine and glycerol being usable as fuel
+    - Fixed Milestones entries and Better Victory Screen statistics
+---------------------------------------------------------------------------------------------------
 Version: 2.0.0
 Date: ???
   Changes:
