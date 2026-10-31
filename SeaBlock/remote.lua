@@ -25,7 +25,7 @@ local function milestones_presets()
   local grouped_milestones = {}
 
   -- Science
-  local bio_science_pack = script.active_mods["ScienceCostTweakerM"] and "sct-bio-science-pack" or "token-bio"
+  local bio_science_pack = script.active_mods["ScienceCostTweakerM"] and "sct-bio-science-pack" or "angels-token-bio"
   grouped_milestones["science"] = {
     { type = "group", name = "Science" },
     { type = "item", name = "automation-science-pack", quantity = 1 },
@@ -105,13 +105,13 @@ local function milestones_presets()
     { type = "item", name = "lab", quantity = 1 },
     { type = "item", name = seablock_default_landfill, quantity = 1 },
     { type = "item", name = seablock_default_landfill, quantity = 1000, next = "x10" },
-    { type = "alias", name = "landfill-dirt-4", equals = seablock_default_landfill, quantity = 1 },
+    { type = "alias", name = "landfill-dirt", equals = seablock_default_landfill, quantity = 1 },
     { type = "alias", name = "landfill-dry-dirt", equals = seablock_default_landfill, quantity = 1 },
-    { type = "alias", name = "landfill-grass-1", equals = seablock_default_landfill, quantity = 1 },
-    { type = "alias", name = "landfill-red-desert-1", equals = seablock_default_landfill, quantity = 1 },
-    { type = "alias", name = "landfill-sand-3", equals = seablock_default_landfill, quantity = 1 },
+    { type = "alias", name = "landfill-grass", equals = seablock_default_landfill, quantity = 1 },
+    { type = "alias", name = "landfill-red-desert", equals = seablock_default_landfill, quantity = 1 },
+    { type = "alias", name = "landfill-sand", equals = seablock_default_landfill, quantity = 1 },
     { type = "alias", name = "landfill", equals = seablock_default_landfill, quantity = 1 },
-    { type = "fluid", name = "liquid-fuel-oil", quantity = 1 },
+    { type = "fluid", name = "angels-liquid-fuel-oil", quantity = 1 },
     { type = "item", name = "locomotive", quantity = 1 },
     { type = "item", name = "construction-robot", quantity = 1 },
     { type = "item", name = "requester-chest", quantity = 1 },
@@ -217,15 +217,18 @@ local function better_victory_screen_statistics(winning_force, forces)
   -- Landfil is common to all forces. To prevent having to check which
   -- tiles can be used for landfil, and handle paving, etc, we will only
   -- count non-water tiles according to the collision masks.
-  local landfill_count = game.surfaces.nauvis.count_tiles_filtered({ collision_mask = "water-tile", invert = true })
+  local landfill_count = game.surfaces.nauvis.count_tiles_filtered({ collision_mask = "water_tile", invert = true })
 
   local stats_by_force = {}
   for _, force in pairs(forces) do
-    local get_output_fluid_count = force.fluid_production_statistics.get_output_count
+    local fluid_statistics = force.get_fluid_production_statistics("nauvis")
     stats_by_force[force.name] = {
       ["production"] = {
         stats = {
-          ["mineral-sludge-consumed"] = { value = get_output_fluid_count("mineral-sludge"), order = "b" },
+          ["mineral-sludge-consumed"] = {
+            value = fluid_statistics.get_output_count("angels-mineral-sludge"),
+            order = "b",
+          },
           ["ores-produced"] = { ignore = true }, -- Cannot mine ores
         },
       },

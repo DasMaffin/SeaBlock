@@ -108,6 +108,7 @@ local mil_items = {
   { type = "item", name = "bob-robot-drone-frame-large" },
   { type = "item", name = "bob-robot-drone-frame" },
   { type = "item", name = "bob-rocket-body" },
+  { type = "item", name = "bob-rocket-engine" },
   { type = "item", name = "bob-rocket-warhead" },
   { type = "item", name = "bob-shot" },
   { type = "item", name = "bob-shotgun-shell-casing" },
@@ -214,7 +215,7 @@ local mil_tech = {
   "discharge-defense-equipment",
   "distractor",
   "bob-distractor-mine",
-  "energy-weapons-damage-7", -- Infinite
+  "laser-weapons-damage-7", -- Infinite
   "explosive-rocketry",
   "flamethrower",
   "follower-robot-count-1",
@@ -259,7 +260,7 @@ local mil_ammo = {
   { type = "ammo", name = "bob-bullet-magazine" },
   { type = "ammo", name = "bob-distractor-artillery-shell" },
   { type = "ammo", name = "bob-electric-bullet-magazine" },
-  { type = "ammo", name = "explosive-artillery-shell" },
+  { type = "ammo", name = "bob-explosive-artillery-shell" },
   { type = "ammo", name = "explosive-rocket" },
   { type = "ammo", name = "explosive-uranium-cannon-shell" },
   { type = "ammo", name = "bob-fire-artillery-shell" },
@@ -443,6 +444,7 @@ local mil_recipes = {
   "bob-robot-drone-frame",
   "bob-robot-drone-frame-large",
   "bob-rocket-body",
+  "bob-rocket-engine",
   "bob-rocket-warhead",
   "bob-scatter-cannon-shell",
   "bob-science-pack-gold",
@@ -501,12 +503,12 @@ if mods["bobwarfare"] then
 end
 data.raw["electric-turret"]["laser-turret"].next_upgrade = nil
 
-bobmods.lib.tech.remove_recipe_unlock("angels-advanced-gas-processing", "gas-fractioning-residual")
-bobmods.lib.tech.remove_recipe_unlock("bob-fluid-barrel-processing", "empty-liquid-glycerol-barrel")
-bobmods.lib.tech.remove_recipe_unlock("bob-fluid-barrel-processing", "empty-liquid-toluene-barrel")
+bobmods.lib.tech.remove_recipe_unlock("angels-advanced-gas-processing", "angels-gas-fractioning-residual")
+bobmods.lib.tech.remove_recipe_unlock("bob-fluid-barrel-processing", "empty-angels-liquid-glycerol-barrel")
+bobmods.lib.tech.remove_recipe_unlock("bob-fluid-barrel-processing", "empty-angels-liquid-toluene-barrel")
 bobmods.lib.tech.remove_recipe_unlock("bob-fluid-barrel-processing", "empty-bob-nitroglycerin-barrel")
-bobmods.lib.tech.remove_recipe_unlock("bob-fluid-barrel-processing", "liquid-glycerol-barrel")
-bobmods.lib.tech.remove_recipe_unlock("bob-fluid-barrel-processing", "liquid-toluene-barrel")
+bobmods.lib.tech.remove_recipe_unlock("bob-fluid-barrel-processing", "angels-liquid-glycerol-barrel")
+bobmods.lib.tech.remove_recipe_unlock("bob-fluid-barrel-processing", "angels-liquid-toluene-barrel")
 bobmods.lib.tech.remove_recipe_unlock("bob-fluid-barrel-processing", "bob-nitroglycerin-barrel")
 bobmods.lib.tech.remove_recipe_unlock("bob-fluid-canister-processing", "empty-bob-alien-acid-barrel")
 bobmods.lib.tech.remove_recipe_unlock("bob-fluid-canister-processing", "empty-bob-alien-explosive-barrel")
@@ -1039,6 +1041,36 @@ if mods["bobequipment"] then
   bobmods.lib.tech.remove_prerequisite("bob-battery-equipment-4", "bob-alien-research")
   bobmods.lib.tech.remove_prerequisite("bob-fission-reactor-equipment-2", "bob-alien-research")
   bobmods.lib.tech.remove_prerequisite("bob-personal-laser-defense-equipment-6", "bob-alien-research")
+
+  -- Alien alloys and fluids are hidden, so use Bob's artifact recipes for when they don't exist
+  for _, swap in pairs({
+    { "bob-exoskeleton-equipment-3", "bob-alien-blue-alloy", "bob-alien-artifact-blue", 5 },
+    { "bob-fission-reactor-equipment-4", "bob-alien-blue-alloy", "bob-alien-artifact-blue", 50 },
+    { "bob-fission-reactor-equipment-4", "bob-alien-fire", "bob-alien-artifact-red", 50 },
+    { "bob-personal-laser-defense-equipment-6", "bob-alien-orange-alloy", "bob-alien-artifact-orange", 5 },
+    { "bob-personal-laser-defense-equipment-6", "bob-alien-blue-alloy", "bob-alien-artifact-blue", 5 },
+    { "bob-personal-laser-defense-equipment-6", "bob-alien-poison", "bob-alien-artifact-green", 10 },
+  }) do
+    local recipe, alien, artifact, amount = swap[1], swap[2], swap[3], swap[4]
+    if data.raw.recipe[recipe] and data.raw.item[artifact] then
+      for _, ingredient in pairs(data.raw.recipe[recipe].ingredients or {}) do
+        if ingredient.name == alien then
+          bobmods.lib.recipe.remove_ingredient(recipe, alien)
+          bobmods.lib.recipe.add_ingredient(recipe, { type = "item", name = artifact, amount = amount })
+          break
+        end
+      end
+    end
+  end
+  for _, tech in pairs({
+    "bob-exoskeleton-equipment-3",
+    "bob-fission-reactor-equipment-4",
+    "bob-personal-laser-defense-equipment-6",
+  }) do
+    for _, color in pairs({ "blue", "orange", "red", "green" }) do
+      bobmods.lib.tech.remove_prerequisite(tech, "bob-alien-" .. color .. "-research")
+    end
+  end
 end
 
 if mods["bobvehicleequipment"] then

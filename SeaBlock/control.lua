@@ -77,7 +77,7 @@ local function init()
     local created_items = remote.call("freeplay", "get_created_items")
     created_items["iron-plate"] = nil
     created_items["burner-mining-drill"] = nil
-    created_items["burner-ore-crusher"] = nil
+    created_items["angels-burner-ore-crusher"] = nil
     created_items["stone-furnace"] = nil
     created_items["iron-plate"] = nil
     created_items["wood"] = nil
@@ -210,7 +210,7 @@ if script.active_mods["Companion_Drones"] then
         -- Only do drone inventory cleanup if coal is found
         -- Else players will get free wood pellets any time a new player joins
         if i > 0 then
-          companion.insert("wood-pellets")
+          companion.insert("angels-wood-pellets")
           local grid = companion.grid
           for _, item in pairs(grid.equipment) do
             if (item.name == "companion-defense-equipment") or (item.name == "companion-shield-equipment") then
@@ -243,7 +243,7 @@ script.on_event(defines.events.on_player_created, function(e)
       local companions = s.find_entities_filtered({ name = "companion" })
       for _, companion in pairs(companions) do
         companion.remove_item("coal")
-        companion.insert("wood-pellets")
+        companion.insert("angels-wood-pellets")
         local grid = companion.grid
         for _, item in pairs(grid.equipment) do
           if (item.name == "companion-defense-equipment") or (item.name == "companion-shield-equipment") then

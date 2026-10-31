@@ -1,4 +1,15 @@
 -- Update catalyst recipes
+-- Angel's returns the catalyst a recipe uses, so swap it in the results too
+local function replace_catalyst(recipe_name, old, new)
+  bobmods.lib.recipe.replace_ingredient(recipe_name, old, new)
+  local recipe = data.raw.recipe[recipe_name]
+  for _, result in pairs(recipe and recipe.results or {}) do
+    if result.name == old then
+      result.name = new
+    end
+  end
+end
+
 bobmods.lib.tech.remove_recipe_unlock("angels-basic-chemistry-3", "angels-catalyst-metal-red")
 seablock.lib.hide("item", "angels-catalyst-metal-red")
 bobmods.lib.recipe.hide("angels-catalyst-metal-red")
@@ -15,68 +26,68 @@ bobmods.lib.recipe.set_ingredients("angels-catalyst-metal-blue", {
 })
 bobmods.lib.tech.add_recipe_unlock("angels-advanced-chemistry-4", "sb-catalyst-metal-purple")
 
-bobmods.lib.recipe.replace_ingredient(
+replace_catalyst(
   "angels-liquid-acetic-acid-catalyst",
   "angels-catalyst-metal-red",
   "angels-catalyst-metal-green"
 )
-bobmods.lib.recipe.replace_ingredient("angels-gas-ammonia", "angels-catalyst-metal-red", "angels-catalyst-metal-green")
-bobmods.lib.recipe.replace_ingredient(
+replace_catalyst("angels-gas-ammonia", "angels-catalyst-metal-red", "angels-catalyst-metal-green")
+replace_catalyst(
   "angels-catalyst-steam-cracking-naphtha",
   "angels-catalyst-metal-red",
   "angels-catalyst-metal-green"
 )
 
-bobmods.lib.recipe.replace_ingredient(
+replace_catalyst(
   "angels-gas-synthesis-methanol",
   "angels-catalyst-metal-green",
   "angels-catalyst-metal-blue"
 )
-bobmods.lib.recipe.replace_ingredient(
+replace_catalyst(
   "angels-gas-acid-catalyst",
   "angels-catalyst-metal-green",
   "angels-catalyst-metal-blue"
 )
-bobmods.lib.recipe.replace_ingredient(
+replace_catalyst(
   "angels-liquid-styrene",
   "angels-catalyst-metal-green",
   "angels-catalyst-metal-blue"
 )
-bobmods.lib.recipe.replace_ingredient("angels-gas-benzene", "angels-catalyst-metal-green", "angels-catalyst-metal-blue")
-bobmods.lib.recipe.replace_ingredient(
+replace_catalyst("angels-gas-benzene", "angels-catalyst-metal-green", "angels-catalyst-metal-blue")
+replace_catalyst(
   "angels-liquid-propionic-acid",
   "angels-catalyst-metal-green",
   "angels-catalyst-metal-blue"
 )
-bobmods.lib.recipe.replace_ingredient(
+replace_catalyst(
   "angels-gas-butadiene",
   "angels-catalyst-metal-green",
   "angels-catalyst-metal-blue"
 )
 
-bobmods.lib.recipe.replace_ingredient(
+replace_catalyst(
   "angels-liquid-naphtha-catalyst",
   "angels-catalyst-metal-red",
   "sb-catalyst-metal-purple"
 )
-bobmods.lib.recipe.replace_ingredient(
+replace_catalyst(
   "angels-solid-sodium-cyanide",
   "angels-catalyst-metal-green",
   "sb-catalyst-metal-purple"
 )
-bobmods.lib.recipe.replace_ingredient(
+replace_catalyst(
   "angels-gas-synthesis-methanation",
   "angels-catalyst-metal-blue",
   "sb-catalyst-metal-purple"
 )
-bobmods.lib.recipe.replace_ingredient("angels-gas-hydrazine", "angels-catalyst-metal-blue", "sb-catalyst-metal-purple")
-bobmods.lib.recipe.replace_ingredient(
+replace_catalyst("angels-gas-hydrazine", "angels-catalyst-metal-blue", "sb-catalyst-metal-purple")
+replace_catalyst(
   "angels-gas-synthesis-methanol",
   "angels-catalyst-metal-blue",
   "sb-catalyst-metal-purple"
 )
 
-bobmods.lib.recipe.replace_ingredient(
+replace_catalyst(
   "angels-cumene-process",
   "angels-catalyst-metal-blue",
   "angels-catalyst-metal-yellow"
@@ -86,10 +97,25 @@ bobmods.lib.recipe.add_new_ingredient(
   "angels-liquid-mineral-oil-catalyst",
   { type = "item", name = "sb-catalyst-metal-purple", amount = 1 }
 )
-bobmods.lib.recipe.add_result(
-  "angels-liquid-mineral-oil-catalyst",
-  { type = "item", name = "angels-catalyst-metal-carrier", amount = 1 }
-)
+if data.raw.recipe["angels-liquid-mineral-oil-catalyst"] then
+  data.raw.recipe["angels-liquid-mineral-oil-catalyst"].main_product = "angels-liquid-mineral-oil"
+  local results = data.raw.recipe["angels-liquid-mineral-oil-catalyst"].results
+  table.insert(results, {
+    type = "item",
+    name = "sb-catalyst-metal-purple",
+    amount = 1,
+    ignored_by_productivity = 1,
+    ignored_by_stats = 1,
+    shared_probability = { min = 0, max = 0.9 },
+  })
+  table.insert(results, {
+    type = "item",
+    name = "angels-catalyst-metal-carrier",
+    amount = 1,
+    ignored_by_productivity = 1,
+    shared_probability = { min = 0.9, max = 1 },
+  })
+end
 
 bobmods.lib.tech.add_prerequisite("angels-bio-plastic-2", "angels-advanced-chemistry-2")
 bobmods.lib.tech.add_prerequisite("angels-sodium-processing-2", "angels-advanced-chemistry-4")

@@ -38,10 +38,8 @@ end
 -- Sea-pump-resource is a virtual resource.
 -- When the offshore pump is placed, it is supposed to be replaced by the resource and a mining-drill.
 -- Removing the resource causes placement of heavy pumps to crash new maps.
--- Without it, keep crude oil; nothing autoplaces it.
-local keep_resource = data.raw["resource"]["sea-pump-resource"] and "sea-pump-resource" or "crude-oil"
 for k, v in pairs(data.raw["resource"]) do
-  if k ~= keep_resource then
+  if k ~= "angels-sea-pump-resource" then
     data.raw["resource"][k] = nil
   end
 end
@@ -68,6 +66,20 @@ for _, tech in pairs(data.raw.technology) do
   end
 end
 
+-- Bob's only enables small alien artifacts when aliens drop them, which they don't in Sea Block.
+-- Angel's makes them from pre-artifacts, so keep them and their recipes.
+if mods["bobenemies"] and settings.startup["bobmods-enemies-enableartifacts"].value then
+  for _, color in pairs({ "", "-red", "-orange", "-yellow", "-green", "-blue", "-purple" }) do
+    if data.raw.item["bob-small-alien-artifact" .. color] then
+      seablock.lib.unhide("item", "bob-small-alien-artifact" .. color)
+    end
+    local recipe = color == "" and "bob-alien-artifact" or "bob-alien-artifact" .. color .. "-from-small"
+    if data.raw.recipe[recipe] then
+      seablock.lib.unhide("recipe", recipe)
+    end
+  end
+end
+
 -- Tidy prerequisite for Brass
 bobmods.lib.tech.remove_prerequisite("bob-zinc-processing", "bob-electrolysis-1")
 bobmods.lib.tech.replace_prerequisite("bob-battery-3", "bob-zinc-processing", "angels-zinc-smelting-1")
@@ -83,8 +95,8 @@ end
 
 -- Tidy up ore silo prerequisites
 if mods["angelsaddons-storage"] then
-  bobmods.lib.tech.remove_prerequisite("ore-silos", "angels-coal-processing")
-  bobmods.lib.tech.replace_prerequisite("ore-silos", "angels-ore-crushing", "angels-ore-advanced-crushing")
+  bobmods.lib.tech.remove_prerequisite("angels-ore-silos", "angels-coal-processing")
+  bobmods.lib.tech.replace_prerequisite("angels-ore-silos", "angels-ore-crushing", "angels-ore-advanced-crushing")
 end
 
 -- Logistic System prerequisite of Pink Science

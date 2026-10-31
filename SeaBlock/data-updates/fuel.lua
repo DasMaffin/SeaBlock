@@ -4,8 +4,8 @@ data.raw.item["angels-wood-charcoal"].fuel_value = "4MJ"
 data.raw.item["angels-pellet-coke"].fuel_value = "24MJ"
 
 -- Make hydrazine solid fuel match fuel_value
-if data.raw.fluid["angels-gas-hydrazine"] then
-  local hydrazinevalue = data.raw.fluid["angels-gas-hydrazine"].fuel_value
+if data.raw.fluid["bob-hydrazine"] then
+  local hydrazinevalue = data.raw.fluid["bob-hydrazine"].fuel_value
   data.raw.fluid["angels-gas-hydrazine"].fuel_value = hydrazinevalue
   if hydrazinevalue:sub(-2) == "kJ" then
     local hydrazinevaluekj = tonumber(hydrazinevalue:sub(1, -3))
@@ -47,9 +47,9 @@ for _, v in pairs({
   "bob-sour-gas",
   "bob-deuterium",
   "angels-gas-deuterium",
-  "angels-gas-hydrazine",
+  "bob-hydrazine",
   "bob-alien-fire",
-  "angels-glycerol",
+  "bob-glycerol",
   "diesel-fuel",
 }) do
   if data.raw.fluid[v] then

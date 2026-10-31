@@ -122,8 +122,8 @@ bobmods.lib.tech.add_recipe_unlock("angels-thermal-water-extraction", "sb-therma
 move_item("angels-thermal-bore", "angels-water-treatment-building", "f[thermal-extractor]-a[bore]", "item")
 
 -- Fish Pressing requires thermal water so add a prerequisite
-if data.raw.technology["angels-bio-pressing-fish"] then
-  bobmods.lib.tech.add_prerequisite("angels-bio-pressing-fish", "angels-thermal-water-extraction")
+if data.raw.technology["angels-bio-pressing-fish-1"] then
+  bobmods.lib.tech.add_prerequisite("angels-bio-pressing-fish-1", "angels-thermal-water-extraction")
 else
   bobmods.lib.tech.add_prerequisite("angels-bio-pressing-fish-1", "angels-thermal-water-extraction")
 end

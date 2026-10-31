@@ -9,13 +9,21 @@ end
 local function BuffLandfill(recipe)
   bobmods.lib.recipe.set_ingredient(recipe, { type = "item", name = "angels-solid-mud", amount = 5 })
   bobmods.lib.recipe.set_energy_required(recipe, 2)
+  for _, tech in pairs(data.raw.technology) do
+    if tech.name ~= "landfill" then
+      bobmods.lib.tech.remove_recipe_unlock(tech.name, recipe)
+    end
+  end
+  bobmods.lib.tech.add_recipe_unlock("landfill", recipe)
 end
 
 BuffLandfill("angels-solid-mud-landfill")
 
 local default_landfill = "landfill"
 
--- Make landfill tech cheaper
+-- Make landfill a red science tech
+data.raw.technology["landfill"].prerequisites = { "angels-water-washing-1" }
+bobmods.lib.tech.remove_prerequisite("angels-water-washing-2", "landfill")
 data.raw.technology["landfill"].unit = {
   count = 10,
   ingredients = { { "automation-science-pack", 1 } },

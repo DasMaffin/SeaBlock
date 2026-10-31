@@ -4,10 +4,10 @@ seablock.lib.substresult("angels-liquid-rubber", "angels-liquid-rubber", nil, 20
 
 -- Reduce burner heat source neighbour bonus
 local reactors = {
-  "burner-reactor",
-  "burner-reactor-2",
-  "fluid-reactor",
-  "fluid-reactor-2",
+  "bob-burner-reactor",
+  "bob-burner-reactor-2",
+  "bob-fluid-reactor",
+  "bob-fluid-reactor-2",
 }
 
 for _, v in pairs(reactors) do

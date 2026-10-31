@@ -119,6 +119,10 @@ seablock.lib.hide("item", "bob-liquid-fuel-barrel")
 -- Swap out Nickel and Zinc plates
 seablock.lib.substingredient("bob-roboport-antenna-3", "bob-nickel-plate", "bob-titanium-plate", nil)
 bobmods.lib.recipe.remove_ingredient("bob-roboport-antenna-4", "bob-nickel-plate")
+-- Bob's 3.0 uses Nickel plate in many more recipes. Nickel is made into ingots instead.
+bobmods.lib.recipe.replace_ingredient_in_all("bob-nickel-plate", "angels-ingot-nickel")
+-- Sniper rifle has its own early tech, but Gunmetal is a hidden military material
+seablock.lib.substingredient("bob-sniper-rifle", "bob-gunmetal-alloy", "steel-plate", nil)
 seablock.lib.substingredient("bob-battery-3", "bob-zinc-plate", "angels-solid-zinc-oxide", nil)
 seablock.lib.substingredient("angels-thorium-fuel-cell", "bob-zinc-plate", "steel-plate", nil)
 seablock.lib.substingredient("angels-deuterium-fuel-cell", "bob-zinc-plate", "steel-plate", nil)
