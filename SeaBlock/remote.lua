@@ -96,7 +96,7 @@ local function milestones_presets()
   }
 
   -- Progress
-  local seablock_default_landfill = script.active_mods["LandfillPainting"]
+  local seablock_default_landfill = (script.active_mods["LandfillPainting"] or script.active_mods["MLandfillPainting"])
       and settings.startup["sb-default-landfill"]
       and settings.startup["sb-default-landfill"].value
     or "landfill"

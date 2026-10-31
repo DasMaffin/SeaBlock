@@ -31,7 +31,7 @@ data.raw.technology["landfill"].unit = {
 }
 bobmods.lib.tech.ignore_tech_cost_multiplier("landfill", true)
 
-if mods["LandfillPainting"] then
+if mods["LandfillPainting"] or mods["MLandfillPainting"] then
   -- Set prefered type for basic landfill crafting
   if settings.startup["sb-default-landfill"] then
     local stripped = settings.startup["sb-default-landfill"].value:gsub("^sb%-default%-landfill%-", "")

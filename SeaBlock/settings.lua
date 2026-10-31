@@ -1,6 +1,6 @@
 seablock = seablock or {}
 
-if mods["LandfillPainting"] then
+if mods["LandfillPainting"] or mods["MLandfillPainting"] then
   local tiletypes = {
     "landfill-dirt",
     "landfill-dry-dirt",
